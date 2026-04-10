@@ -13,6 +13,7 @@ class Gallery extends Model
     protected $fillable = [
         'profile_id',
         'title',
+        'description',
         'image',
         'category',
         'sort_order',

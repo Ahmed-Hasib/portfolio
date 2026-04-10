@@ -32,7 +32,7 @@ export default function GallerySection({ galleries }) {
                 <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                     {galleries.map((gallery, index) => (
                         <motion.div
-                            key={`${gallery.title}-${gallery.image}`}
+                            key={gallery.id ?? `${gallery.title}-${gallery.image}`}
                             initial={
                                 prefersReducedMotion
                                     ? false
@@ -52,13 +52,22 @@ export default function GallerySection({ galleries }) {
                         >
                             <SurfaceCard className="overflow-hidden p-4">
                                 <motion.div
-                                    className="h-56 rounded-[1.5rem] bg-linear-to-br from-accent/12 via-white to-accent-warm/16"
+                                    className="overflow-hidden rounded-[1.5rem]"
                                     whileHover={
                                         prefersReducedMotion
                                             ? undefined
                                             : { scale: 1.02 }
                                     }
-                                />
+                                >
+                                    <img
+                                        src={gallery.image}
+                                        alt={
+                                            gallery.title ?? 'Gallery highlight'
+                                        }
+                                        className="h-56 w-full object-cover"
+                                        loading="lazy"
+                                    />
+                                </motion.div>
                                 <div className="px-2 pb-2 pt-5">
                                     <p className="text-xs font-semibold uppercase tracking-[0.28em] text-ink-soft">
                                         {gallery.category ?? 'Gallery'}
@@ -66,9 +75,19 @@ export default function GallerySection({ galleries }) {
                                     <h3 className="font-display mt-3 text-2xl font-bold tracking-tight text-ink">
                                         {gallery.title ?? 'Untitled capture'}
                                     </h3>
-                                    <p className="mt-3 text-sm leading-7 text-ink-soft">
-                                        Asset path: {gallery.image}
-                                    </p>
+                                    {gallery.description ? (
+                                        <div
+                                            className="prose prose-sm mt-3 max-w-none text-ink-soft prose-headings:text-ink prose-p:text-ink-soft prose-strong:text-ink prose-li:text-ink-soft prose-a:text-accent"
+                                            dangerouslySetInnerHTML={{
+                                                __html: gallery.description,
+                                            }}
+                                        />
+                                    ) : (
+                                        <p className="mt-3 text-sm leading-7 text-ink-soft">
+                                            Visual gallery item from the
+                                            portfolio showcase.
+                                        </p>
+                                    )}
                                 </div>
                             </SurfaceCard>
                         </motion.div>

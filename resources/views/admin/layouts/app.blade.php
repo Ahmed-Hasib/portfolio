@@ -72,6 +72,79 @@
                 resize: vertical;
             }
 
+            .editor-toolbar {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-bottom: 0.9rem;
+            }
+
+            .editor-toolbar-button {
+                border: 1px solid rgba(16, 34, 41, 0.12);
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 0.55rem 0.9rem;
+                color: #102229;
+                font-size: 0.8rem;
+                font-weight: 700;
+                line-height: 1;
+                transition: 0.2s ease;
+            }
+
+            .editor-toolbar-button:hover {
+                border-color: rgba(15, 118, 110, 0.28);
+                background: rgba(15, 118, 110, 0.08);
+                color: #0f766e;
+            }
+
+            .editor-canvas {
+                min-height: 15rem;
+                border: 1px solid rgba(16, 34, 41, 0.12);
+                border-radius: 1rem;
+                background: #fff;
+                padding: 1rem;
+                color: #102229;
+                line-height: 1.7;
+                outline: none;
+            }
+
+            .editor-canvas:focus {
+                border-color: rgba(15, 118, 110, 0.42);
+                box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.08);
+            }
+
+            .editor-canvas:empty::before {
+                content: attr(data-placeholder);
+                color: rgba(77, 103, 104, 0.8);
+            }
+
+            .editor-canvas p,
+            .editor-canvas ul,
+            .editor-canvas ol {
+                margin: 0 0 0.85rem;
+            }
+
+            .editor-canvas ul,
+            .editor-canvas ol {
+                padding-left: 1.35rem;
+            }
+
+            .admin-prose {
+                color: #4d6768;
+                line-height: 1.7;
+            }
+
+            .admin-prose p,
+            .admin-prose ul,
+            .admin-prose ol {
+                margin: 0 0 0.65rem;
+            }
+
+            .admin-prose ul,
+            .admin-prose ol {
+                padding-left: 1.2rem;
+            }
+
             .admin-label {
                 display: block;
                 font-size: 0.95rem;

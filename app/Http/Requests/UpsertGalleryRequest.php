@@ -27,8 +27,12 @@ class UpsertGalleryRequest extends FormRequest
     {
         return [
             'profile_id' => ['required', 'exists:profiles,id'],
-            'image' => ['required', 'string', 'max:2048'],
+            'image' => array_merge(
+                $this->isMethod('post') ? ['required'] : ['nullable'],
+                ['image', 'mimes:jpg,jpeg,png,webp,avif', 'max:5120'],
+            ),
             'title' => ['nullable', 'string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:10000'],
             'category' => ['nullable', 'string', 'max:255'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
         ];

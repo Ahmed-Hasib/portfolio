@@ -213,6 +213,7 @@ class PortfolioContentApiTest extends TestCase
         $galleries = collect([
             new Gallery([
                 'title' => 'Homepage Hero',
+                'description' => '<p>Polished hero exploration.</p>',
                 'image' => '/storage/gallery/hero-shot.png',
                 'category' => 'UI Design',
                 'sort_order' => 1,
@@ -227,7 +228,8 @@ class PortfolioContentApiTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertJsonPath('data.0.title', 'Homepage Hero');
+            ->assertJsonPath('data.0.title', 'Homepage Hero')
+            ->assertJsonPath('data.0.description', '<p>Polished hero exploration.</p>');
     }
 
     public function test_social_links_endpoint_returns_collection(): void

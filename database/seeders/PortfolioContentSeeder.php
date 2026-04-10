@@ -254,21 +254,26 @@ class PortfolioContentSeeder extends Seeder
             );
         }
 
-        if ($profile->galleries()->doesntExist()) {
-            $profile->galleries()->createMany([
-                [
-                    'image' => '/storage/gallery/hero-shot.png',
-                    'title' => 'Portfolio Hero Concept',
-                    'category' => 'UI Design',
-                    'sort_order' => 1,
-                ],
-                [
-                    'image' => '/storage/gallery/dashboard-shot.png',
-                    'title' => 'Dashboard Interface',
-                    'category' => 'Product Work',
-                    'sort_order' => 2,
-                ],
-            ]);
+        foreach ([
+            [
+                'title' => 'Portfolio Hero Concept',
+                'image' => '/storage/gallery/hero-shot.png',
+                'description' => '<p>Early hero direction exploring premium typography, layered gradients, and a cleaner founder-focused first impression.</p>',
+                'category' => 'UI Design',
+                'sort_order' => 1,
+            ],
+            [
+                'title' => 'Dashboard Interface',
+                'image' => '/storage/gallery/dashboard-shot.png',
+                'description' => '<p>Operational dashboard concept built around denser reporting, calmer visual hierarchy, and easier daily scanning for teams.</p>',
+                'category' => 'Product Work',
+                'sort_order' => 2,
+            ],
+        ] as $gallery) {
+            $profile->galleries()->updateOrCreate(
+                ['title' => $gallery['title']],
+                $gallery,
+            );
         }
     }
 }

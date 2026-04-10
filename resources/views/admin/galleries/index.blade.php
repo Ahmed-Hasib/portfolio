@@ -17,9 +17,11 @@
             <table class="admin-table">
                 <thead>
                     <tr>
+                        <th>Preview</th>
                         <th>Title</th>
                         <th>Profile</th>
                         <th>Category</th>
+                        <th>Description</th>
                         <th>Image</th>
                         <th>Order</th>
                         <th>Actions</th>
@@ -28,10 +30,26 @@
                 <tbody>
                     @forelse ($galleries as $gallery)
                         <tr>
+                            <td>
+                                <img
+                                    src="{{ str_starts_with($gallery->image, 'http') ? $gallery->image : asset(ltrim($gallery->image, '/')) }}"
+                                    alt="{{ $gallery->title ?: 'Gallery image' }}"
+                                    class="h-16 w-20 rounded-[0.85rem] object-cover"
+                                >
+                            </td>
                             <td>{{ $gallery->title ?: 'Untitled' }}</td>
                             <td>{{ $gallery->profile?->full_name }}</td>
                             <td>{{ $gallery->category ?: 'General' }}</td>
-                            <td>{{ $gallery->image }}</td>
+                            <td class="max-w-sm">
+                                @if ($gallery->description)
+                                    <div class="admin-prose text-sm">
+                                        {{ \Illuminate\Support\Str::limit(strip_tags($gallery->description), 140) }}
+                                    </div>
+                                @else
+                                    <span class="text-ink-soft">No description</span>
+                                @endif
+                            </td>
+                            <td class="max-w-xs break-all">{{ $gallery->image }}</td>
                             <td>{{ $gallery->sort_order }}</td>
                             <td>
                                 <div class="flex flex-wrap gap-2">
@@ -45,7 +63,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="6" class="text-center text-ink-soft">No gallery items found.</td></tr>
+                        <tr><td colspan="8" class="text-center text-ink-soft">No gallery items found.</td></tr>
                     @endforelse
                 </tbody>
             </table>
