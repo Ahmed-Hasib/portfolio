@@ -43,8 +43,9 @@ export default function HeroSection({
 }) {
     const prefersReducedMotion = useReducedMotion();
     const fullName = profile?.full_name ?? 'Hasib Rahman';
+    const plainBio = (profile?.bio ?? '').replace(/<[^>]*>/g, ' ').trim();
     const intro =
-        profile?.bio ??
+        plainBio ||
         'I design and ship modern digital experiences with a Laravel backend, a React frontend, and a strong focus on maintainable product systems.';
     const primarySkills = skills.slice(0, 4);
     const externalSocialLinks = socialLinks.filter((link) =>

@@ -45,10 +45,19 @@ export default function AboutSection({
                                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ink-soft">
                                     Short Biography
                                 </p>
-                                <p className="mt-5 text-base leading-8 text-ink-soft">
-                                    {profile?.bio ??
-                                        'Profile bio will be displayed here once content is available from the API.'}
-                                </p>
+                                {profile?.bio ? (
+                                    <div
+                                        className="prose prose-sm mt-5 max-w-none text-ink-soft prose-headings:text-ink prose-p:text-ink-soft prose-strong:text-ink prose-li:text-ink-soft prose-a:text-accent"
+                                        dangerouslySetInnerHTML={{
+                                            __html: profile.bio,
+                                        }}
+                                    />
+                                ) : (
+                                    <p className="mt-5 text-base leading-8 text-ink-soft">
+                                        Profile bio will be displayed here once
+                                        content is available from the API.
+                                    </p>
+                                )}
                             </div>
 
                             <div className="rounded-[2rem] border border-black/8 bg-linear-to-br from-accent/10 via-white to-accent-warm/12 p-6 sm:p-7">
