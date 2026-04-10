@@ -20,9 +20,14 @@ class ProfileService
     ) {
     }
 
+    public function findPublicProfile(): ?Profile
+    {
+        return $this->profileRepository->getActiveProfile();
+    }
+
     public function getPublicProfile(): Profile
     {
-        $profile = $this->profileRepository->getActiveProfile();
+        $profile = $this->findPublicProfile();
 
         if ($profile === null) {
             throw new NotFoundHttpException('Active profile not found.');

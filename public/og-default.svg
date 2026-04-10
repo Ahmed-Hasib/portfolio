@@ -1,0 +1,19 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="630" fill="#102229"/>
+    <circle cx="950" cy="120" r="180" fill="#0F766E" fill-opacity="0.25"/>
+    <circle cx="1040" cy="520" r="220" fill="#DD6B20" fill-opacity="0.2"/>
+    <circle cx="210" cy="120" r="140" fill="#0F766E" fill-opacity="0.14"/>
+    <rect x="96" y="92" width="1008" height="446" rx="40" fill="#F7F3EA" fill-opacity="0.08" stroke="#FFFFFF" stroke-opacity="0.12"/>
+    <text x="110" y="190" fill="#0F766E" font-family="Space Grotesk, Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="6">
+        HASIB PORTFOLIO V2
+    </text>
+    <text x="110" y="302" fill="#F7F3EA" font-family="Space Grotesk, Arial, sans-serif" font-size="70" font-weight="700">
+        Laravel and React
+    </text>
+    <text x="110" y="382" fill="#F7F3EA" font-family="Space Grotesk, Arial, sans-serif" font-size="70" font-weight="700">
+        Developer Portfolio
+    </text>
+    <text x="110" y="462" fill="#D5DDD9" font-family="Manrope, Arial, sans-serif" font-size="28" font-weight="500">
+        Modern full-stack portfolio with dynamic content, polished UI, and production-ready architecture.
+    </text>
+</svg>

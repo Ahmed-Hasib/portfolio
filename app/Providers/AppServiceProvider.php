@@ -6,6 +6,7 @@ use App\Interfaces\ContactRepositoryInterface;
 use App\Interfaces\ProfileRepositoryInterface;
 use App\Repositories\ContactRepository;
 use App\Repositories\ProfileRepository;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (! $this->app->runningInConsole() && config('portfolio.security.force_https')) {
+            URL::forceScheme('https');
+        }
     }
 }

@@ -258,7 +258,7 @@ class PortfolioContentApiTest extends TestCase
 
         $response
             ->assertUnprocessable()
-            ->assertJsonValidationErrors(['name', 'email', 'message']);
+            ->assertJsonValidationErrors(['name', 'email', 'subject', 'message']);
     }
 
     public function test_contact_endpoint_stores_a_submission_and_returns_clean_json(): void

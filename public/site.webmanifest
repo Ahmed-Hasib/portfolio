@@ -1,0 +1,15 @@
+{
+    "name": "Hasib Portfolio v2",
+    "short_name": "Hasib Portfolio",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#f7f3ea",
+    "theme_color": "#102229",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "48x48 32x32 16x16",
+            "type": "image/x-icon"
+        }
+    ]
+}
