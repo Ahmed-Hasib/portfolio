@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\API\PortfolioProfileController;
+use App\Http\Controllers\API\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('portfolio')->group(function () {
-    Route::get('/profile', [PortfolioProfileController::class, 'show'])
+    Route::get('/profile', [ProfileController::class, 'show'])
         ->name('api.portfolio.profile.show');
 });

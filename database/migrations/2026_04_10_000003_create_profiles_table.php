@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('portfolio_profiles', function (Blueprint $table) {
+        Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->string('full_name');
-            $table->string('headline');
-            $table->text('short_bio')->nullable();
+            $table->string('designation');
+            $table->text('bio')->nullable();
             $table->string('location')->nullable();
             $table->string('email')->nullable();
-            $table->string('availability')->nullable();
-            $table->string('cv_url')->nullable();
-            $table->json('social_links')->nullable();
-            $table->json('highlight_metrics')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('profile_image')->nullable();
+            $table->string('resume_url')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('portfolio_profiles');
+        Schema::dropIfExists('profiles');
     }
 };

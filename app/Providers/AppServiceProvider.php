@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Interfaces\PortfolioProfileRepositoryInterface;
-use App\Repositories\PortfolioProfileRepository;
+use App\Interfaces\ProfileRepositoryInterface;
+use App\Repositories\ProfileRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,8 +14,8 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            PortfolioProfileRepositoryInterface::class,
-            PortfolioProfileRepository::class,
+            ProfileRepositoryInterface::class,
+            ProfileRepository::class,
         );
     }
 
