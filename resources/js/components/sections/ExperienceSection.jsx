@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import EmptyState from '../common/EmptyState';
 import SectionHeading from '../common/SectionHeading';
 import SurfaceCard from '../common/SurfaceCard';
@@ -28,6 +28,8 @@ function formatDateRange(startDate, endDate) {
 }
 
 export default function ExperienceSection({ experiences }) {
+    const prefersReducedMotion = useReducedMotion();
+
     return (
         <motion.section {...reveal} id="experience" className="mt-8">
             <SectionHeading
@@ -46,9 +48,25 @@ export default function ExperienceSection({ experiences }) {
             ) : (
                 <div className="mt-6 space-y-6">
                     {experiences.map((experience, index) => (
-                        <div
+                        <motion.div
                             key={`${experience.company_name}-${experience.role}`}
                             className="relative pl-8 sm:pl-12"
+                            initial={
+                                prefersReducedMotion
+                                    ? false
+                                    : { opacity: 0, y: 24 }
+                            }
+                            whileInView={
+                                prefersReducedMotion
+                                    ? undefined
+                                    : { opacity: 1, y: 0 }
+                            }
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{
+                                delay: index * 0.06,
+                                duration: 0.45,
+                                ease: [0.22, 1, 0.36, 1],
+                            }}
                         >
                             <div className="absolute left-3 top-0 h-full w-px bg-linear-to-b from-accent/40 via-black/10 to-transparent sm:left-5" />
                             <div className="absolute left-0 top-9 flex h-6 w-6 items-center justify-center rounded-full border border-accent/20 bg-white shadow-[0_10px_30px_-20px_rgba(15,118,110,0.85)] sm:left-2.5">
@@ -174,7 +192,7 @@ export default function ExperienceSection({ experiences }) {
                                     </div>
                                 </div>
                             </SurfaceCard>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             )}

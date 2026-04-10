@@ -1,3 +1,4 @@
+import { useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 const fallbackItems = ['Building polished web experiences'];
@@ -9,12 +10,19 @@ export default function TypingText({
     deletingSpeed = 45,
     pauseDuration = 1500,
 }) {
+    const prefersReducedMotion = useReducedMotion();
     const [itemIndex, setItemIndex] = useState(0);
     const [displayText, setDisplayText] = useState('');
     const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         const safeItems = items.length > 0 ? items : fallbackItems;
+
+        if (prefersReducedMotion) {
+            setDisplayText(safeItems[0]);
+            return undefined;
+        }
+
         const currentItem = safeItems[itemIndex % safeItems.length];
         const nextText = isDeleting
             ? currentItem.slice(0, Math.max(0, displayText.length - 1))
@@ -50,13 +58,16 @@ export default function TypingText({
         items,
         itemIndex,
         pauseDuration,
+        prefersReducedMotion,
         typingSpeed,
     ]);
 
     return (
         <span className={className}>
             {displayText}
-            <span className="ml-1 inline-block h-[1em] w-px animate-pulse bg-current align-[-0.15em]" />
+            {prefersReducedMotion ? null : (
+                <span className="ml-1 inline-block h-[1em] w-px animate-pulse bg-current align-[-0.15em]" />
+            )}
         </span>
     );
 }

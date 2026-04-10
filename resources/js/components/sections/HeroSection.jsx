@@ -1,19 +1,34 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import AnimatedCounter from '../common/AnimatedCounter';
 import Badge from '../common/Badge';
 import Button from '../common/Button';
 import SurfaceCard from '../common/SurfaceCard';
 import TypingText from '../common/TypingText';
 
-const heroMotion = {
-    initial: { opacity: 0, y: 28 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+const heroContainer = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.08,
+            delayChildren: 0.08,
+        },
+    },
+};
+
+const heroItem = {
+    hidden: { opacity: 0, y: 24 },
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+    },
 };
 
 const asideMotion = {
     initial: { opacity: 0, x: 24 },
     animate: { opacity: 1, x: 0 },
-    transition: { delay: 0.1, duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+    transition: { delay: 0.12, duration: 0.75, ease: [0.22, 1, 0.36, 1] },
 };
 
 export default function HeroSection({
@@ -26,6 +41,7 @@ export default function HeroSection({
     yearsOfExperience,
     currentFocus,
 }) {
+    const prefersReducedMotion = useReducedMotion();
     const fullName = profile?.full_name ?? 'Hasib Rahman';
     const intro =
         profile?.bio ??
@@ -44,16 +60,46 @@ export default function HeroSection({
     return (
         <section className="grid items-start gap-8 lg:grid-cols-[1.25fr_0.75fr]">
             <motion.div
-                {...heroMotion}
+                variants={prefersReducedMotion ? undefined : heroContainer}
+                initial={prefersReducedMotion ? false : 'hidden'}
+                animate={prefersReducedMotion ? undefined : 'show'}
                 className="surface-card relative overflow-hidden px-6 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12"
             >
-                <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/18 blur-3xl" />
-                <div className="absolute bottom-0 right-8 h-64 w-64 rounded-full bg-accent-warm/14 blur-3xl" />
+                <motion.div
+                    aria-hidden="true"
+                    className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-accent/18 blur-3xl"
+                    animate={
+                        prefersReducedMotion
+                            ? undefined
+                            : { x: [0, -10, 0], y: [0, 16, 0] }
+                    }
+                    transition={{
+                        duration: 12,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: 'easeInOut',
+                    }}
+                />
+                <motion.div
+                    aria-hidden="true"
+                    className="absolute bottom-0 right-8 h-64 w-64 rounded-full bg-accent-warm/14 blur-3xl"
+                    animate={
+                        prefersReducedMotion
+                            ? undefined
+                            : { x: [0, 12, 0], y: [0, -14, 0] }
+                    }
+                    transition={{
+                        duration: 15,
+                        repeat: Number.POSITIVE_INFINITY,
+                        ease: 'easeInOut',
+                    }}
+                />
                 <div className="absolute inset-y-0 right-0 hidden w-px bg-linear-to-b from-transparent via-black/8 to-transparent lg:block" />
 
-                <Badge tone="accent">Available for selected work</Badge>
+                <motion.div variants={heroItem}>
+                    <Badge tone="accent">Available for selected work</Badge>
+                </motion.div>
 
-                <div className="mt-6 max-w-3xl">
+                <motion.div variants={heroItem} className="mt-6 max-w-3xl">
                     <p className="text-sm font-semibold uppercase tracking-[0.32em] text-ink-soft">
                         {profile?.designation ??
                             'Full-Stack Laravel and React Developer'}
@@ -71,9 +117,12 @@ export default function HeroSection({
                     <p className="mt-6 max-w-2xl text-base leading-8 text-ink-soft sm:text-lg">
                         {intro}
                     </p>
-                </div>
+                </motion.div>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <motion.div
+                    variants={heroItem}
+                    className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+                >
                     <Button
                         href="#contact"
                         className="shadow-[0_20px_45px_-28px_rgba(16,34,41,0.85)]"
@@ -93,40 +142,110 @@ export default function HeroSection({
                     <Button href="#projects" variant="secondary">
                         View Projects
                     </Button>
-                </div>
+                </motion.div>
 
-                <div className="mt-7 flex flex-wrap gap-3">
+                <motion.div
+                    variants={heroItem}
+                    className="mt-7 flex flex-wrap gap-3"
+                >
                     {externalSocialLinks.map((link) => (
-                        <a
+                        <motion.a
                             key={link.platform_name}
                             href={link.url}
-                            className="pill hover:border-accent/30 hover:text-accent"
+                            className="pill social-chip"
                             target="_blank"
                             rel="noreferrer"
+                            whileHover={
+                                prefersReducedMotion
+                                    ? undefined
+                                    : { y: -3, scale: 1.02 }
+                            }
+                            whileTap={
+                                prefersReducedMotion
+                                    ? undefined
+                                    : { scale: 0.98 }
+                            }
+                            transition={{
+                                duration: 0.2,
+                                ease: [0.22, 1, 0.36, 1],
+                            }}
                         >
                             {link.platform_name}
-                        </a>
+                        </motion.a>
                     ))}
-                </div>
+                </motion.div>
 
-                <div className="mt-10 grid gap-4 md:grid-cols-3">
-                    {metrics.map((metric) => (
-                        <div
+                <motion.div
+                    variants={heroItem}
+                    className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4"
+                >
+                    {metrics.map((metric, index) => (
+                        <motion.div
                             key={metric.label}
+                            initial={
+                                prefersReducedMotion
+                                    ? false
+                                    : { opacity: 0, y: 18 }
+                            }
+                            whileInView={
+                                prefersReducedMotion
+                                    ? undefined
+                                    : { opacity: 1, y: 0 }
+                            }
+                            viewport={{ once: true, amount: 0.7 }}
+                            transition={{
+                                delay: index * 0.05,
+                                duration: 0.45,
+                                ease: [0.22, 1, 0.36, 1],
+                            }}
                             className="rounded-[1.75rem] border border-black/8 bg-white/78 p-5 shadow-[0_20px_50px_-35px_rgba(16,34,41,0.35)]"
                         >
-                            <p className="font-display text-2xl font-bold text-ink">
-                                {metric.value}
-                            </p>
+                            <AnimatedCounter
+                                value={metric.value}
+                                className="font-display text-2xl font-bold text-ink"
+                            />
                             <p className="mt-2 text-sm leading-6 text-ink-soft">
                                 {metric.label}
                             </p>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </motion.div>
 
-            <motion.aside {...asideMotion}>
+            <motion.aside
+                {...(prefersReducedMotion ? {} : asideMotion)}
+                animate={
+                    prefersReducedMotion
+                        ? undefined
+                        : {
+                              opacity: 1,
+                              x: 0,
+                              y: [0, -6, 0],
+                          }
+                }
+                transition={
+                    prefersReducedMotion
+                        ? undefined
+                        : {
+                              opacity: {
+                                  delay: 0.12,
+                                  duration: 0.75,
+                                  ease: [0.22, 1, 0.36, 1],
+                              },
+                              x: {
+                                  delay: 0.12,
+                                  duration: 0.75,
+                                  ease: [0.22, 1, 0.36, 1],
+                              },
+                              y: {
+                                  delay: 0.9,
+                                  duration: 6,
+                                  repeat: Number.POSITIVE_INFINITY,
+                                  ease: 'easeInOut',
+                              },
+                          }
+                }
+            >
                 <SurfaceCard className="relative overflow-hidden px-6 py-8 sm:px-8">
                     <div className="absolute inset-x-10 top-0 h-px bg-linear-to-r from-transparent via-black/10 to-transparent" />
                     <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-accent/12 blur-3xl" />
@@ -135,9 +254,16 @@ export default function HeroSection({
 
                     <div className="mt-6 rounded-[2rem] border border-black/8 bg-linear-to-br from-ink via-ink to-[#17393f] p-6 text-white shadow-[0_30px_80px_-45px_rgba(16,34,41,0.95)]">
                         <div className="flex items-start justify-between gap-4">
-                            <div className="flex h-20 w-20 items-center justify-center rounded-[1.75rem] border border-white/15 bg-white/10 font-display text-3xl font-bold tracking-tight">
+                            <motion.div
+                                whileHover={
+                                    prefersReducedMotion
+                                        ? undefined
+                                        : { rotate: -4, scale: 1.03 }
+                                }
+                                className="flex h-20 w-20 items-center justify-center rounded-[1.75rem] border border-white/15 bg-white/10 font-display text-3xl font-bold tracking-tight"
+                            >
                                 {initials}
-                            </div>
+                            </motion.div>
                             <div className="rounded-full border border-white/10 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-white/75">
                                 {profile?.location ?? 'Remote'}
                             </div>
@@ -162,17 +288,19 @@ export default function HeroSection({
                                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/60">
                                     Experience
                                 </p>
-                                <p className="mt-2 font-display text-3xl font-bold">
-                                    {yearsOfExperience}
-                                </p>
+                                <AnimatedCounter
+                                    value={yearsOfExperience}
+                                    className="mt-2 block font-display text-3xl font-bold"
+                                />
                             </div>
                             <div className="rounded-[1.5rem] border border-white/10 bg-white/8 p-4">
                                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/60">
                                     Featured Work
                                 </p>
-                                <p className="mt-2 font-display text-3xl font-bold">
-                                    {projects.length}
-                                </p>
+                                <AnimatedCounter
+                                    value={`${projects.length}`}
+                                    className="mt-2 block font-display text-3xl font-bold"
+                                />
                             </div>
                         </div>
                     </div>
@@ -184,9 +312,17 @@ export default function HeroSection({
                             </p>
                             <div className="mt-3 flex flex-wrap gap-2">
                                 {primarySkills.map((skill) => (
-                                    <span key={skill.name} className="pill">
+                                    <motion.span
+                                        key={skill.name}
+                                        className="pill"
+                                        whileHover={
+                                            prefersReducedMotion
+                                                ? undefined
+                                                : { y: -2 }
+                                        }
+                                    >
                                         {skill.name}
-                                    </span>
+                                    </motion.span>
                                 ))}
                             </div>
                         </div>
@@ -204,9 +340,10 @@ export default function HeroSection({
                                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-ink-soft">
                                     Social Links
                                 </p>
-                                <p className="mt-2 font-display text-3xl font-bold text-ink">
-                                    {socialLinks.length}
-                                </p>
+                                <AnimatedCounter
+                                    value={`${socialLinks.length}`}
+                                    className="mt-2 block font-display text-3xl font-bold text-ink"
+                                />
                             </div>
                         </div>
                     </div>

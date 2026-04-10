@@ -35,8 +35,12 @@ function buildMetrics({ skills, experiences, projects, socialLinks }) {
             label: 'projects currently showcased in the portfolio',
         },
         {
-            value: `${skills.length}+${socialLinks.length}`,
-            label: 'core technologies and active social channels',
+            value: `${skills.length}`,
+            label: 'core technologies grouped across the resume section',
+        },
+        {
+            value: `${socialLinks.length}`,
+            label: 'active social channels for hiring and collaboration',
         },
     ];
 }

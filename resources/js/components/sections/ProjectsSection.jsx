@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useDeferredValue, useMemo, useState } from 'react';
 import EmptyState from '../common/EmptyState';
 import SectionHeading from '../common/SectionHeading';
@@ -14,6 +14,7 @@ const reveal = {
 };
 
 export default function ProjectsSection({ projects }) {
+    const prefersReducedMotion = useReducedMotion();
     const [activeCategory, setActiveCategory] = useState('All');
     const [activeTechnology, setActiveTechnology] = useState('All');
     const [selectedProject, setSelectedProject] = useState(null);
@@ -143,12 +144,31 @@ export default function ProjectsSection({ projects }) {
                                 </p>
                             </div>
                             <div className="mt-4 grid gap-5 xl:grid-cols-2">
-                                {featuredProjects.map((project) => (
-                                    <ProjectCard
+                                {featuredProjects.map((project, index) => (
+                                    <motion.div
                                         key={project.slug}
-                                        project={project}
-                                        onPreview={setSelectedProject}
-                                    />
+                                        initial={
+                                            prefersReducedMotion
+                                                ? false
+                                                : { opacity: 0, y: 24 }
+                                        }
+                                        whileInView={
+                                            prefersReducedMotion
+                                                ? undefined
+                                                : { opacity: 1, y: 0 }
+                                        }
+                                        viewport={{ once: true, amount: 0.25 }}
+                                        transition={{
+                                            delay: index * 0.06,
+                                            duration: 0.45,
+                                            ease: [0.22, 1, 0.36, 1],
+                                        }}
+                                    >
+                                        <ProjectCard
+                                            project={project}
+                                            onPreview={setSelectedProject}
+                                        />
+                                    </motion.div>
                                 ))}
                             </div>
                         </div>
@@ -173,12 +193,31 @@ export default function ProjectsSection({ projects }) {
                                 </p>
                             </div>
                             <div className="mt-4 grid gap-5 md:grid-cols-2">
-                                {archiveProjects.map((project) => (
-                                    <ProjectCard
+                                {archiveProjects.map((project, index) => (
+                                    <motion.div
                                         key={project.slug}
-                                        project={project}
-                                        onPreview={setSelectedProject}
-                                    />
+                                        initial={
+                                            prefersReducedMotion
+                                                ? false
+                                                : { opacity: 0, y: 24 }
+                                        }
+                                        whileInView={
+                                            prefersReducedMotion
+                                                ? undefined
+                                                : { opacity: 1, y: 0 }
+                                        }
+                                        viewport={{ once: true, amount: 0.25 }}
+                                        transition={{
+                                            delay: index * 0.05,
+                                            duration: 0.42,
+                                            ease: [0.22, 1, 0.36, 1],
+                                        }}
+                                    >
+                                        <ProjectCard
+                                            project={project}
+                                            onPreview={setSelectedProject}
+                                        />
+                                    </motion.div>
                                 ))}
                             </div>
                         </div>

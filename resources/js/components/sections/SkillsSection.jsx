@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import EmptyState from '../common/EmptyState';
 import SectionHeading from '../common/SectionHeading';
 import SurfaceCard from '../common/SurfaceCard';
@@ -55,6 +55,7 @@ function groupSkills(skills) {
 }
 
 export default function SkillsSection({ skills }) {
+    const prefersReducedMotion = useReducedMotion();
     const groupedSkills = groupSkills(skills);
 
     return (
@@ -74,62 +75,103 @@ export default function SkillsSection({ skills }) {
                 </div>
             ) : (
                 <div className="mt-6 grid gap-5 xl:grid-cols-2">
-                    {groupedSkills.map(([category, categorySkills]) => (
-                        <SurfaceCard
+                    {groupedSkills.map(([category, categorySkills], index) => (
+                        <motion.div
                             key={category}
-                            className="px-6 py-7 sm:px-8"
+                            initial={
+                                prefersReducedMotion
+                                    ? false
+                                    : { opacity: 0, y: 24 }
+                            }
+                            whileInView={
+                                prefersReducedMotion
+                                    ? undefined
+                                    : { opacity: 1, y: 0 }
+                            }
+                            viewport={{ once: true, amount: 0.25 }}
+                            transition={{
+                                delay: index * 0.06,
+                                duration: 0.45,
+                                ease: [0.22, 1, 0.36, 1],
+                            }}
                         >
-                            <div className="flex items-center justify-between gap-4">
-                                <div>
-                                    <p className="text-xs font-semibold uppercase tracking-[0.28em] text-ink-soft">
-                                        Skill Category
-                                    </p>
-                                    <h3 className="font-display mt-3 text-3xl font-bold tracking-tight text-ink">
-                                        {category}
-                                    </h3>
-                                </div>
-                                <div className="rounded-full border border-black/8 bg-shell-strong/65 px-4 py-2 text-sm font-semibold text-ink-soft">
-                                    {categorySkills.length} skills
-                                </div>
-                            </div>
-
-                            <div className="mt-6 space-y-4">
-                                {categorySkills.map((skill) => (
-                                    <div
-                                        key={skill.name}
-                                        className="rounded-[1.5rem] border border-black/8 bg-white/80 px-5 py-5"
-                                    >
-                                        <div className="flex items-start gap-4">
-                                            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[1rem] border border-accent/15 bg-accent/8 font-display text-lg font-bold text-accent">
-                                                {skillIcons[skill.icon] ?? '#'}
-                                            </div>
-
-                                            <div className="min-w-0 flex-1">
-                                                <div className="flex flex-wrap items-center justify-between gap-3">
-                                                    <h4 className="font-display text-xl font-bold tracking-tight text-ink">
-                                                        {skill.name}
-                                                    </h4>
-                                                    <span className="rounded-full border border-black/8 bg-shell-strong/65 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-ink-soft">
-                                                        {skill.proficiency_percentage ??
-                                                            0}
-                                                        %
-                                                    </span>
-                                                </div>
-
-                                                <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-shell-strong">
-                                                    <div
-                                                        className="h-full rounded-full bg-linear-to-r from-accent to-accent-warm"
-                                                        style={{
-                                                            width: `${skill.proficiency_percentage ?? 0}%`,
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
+                            <SurfaceCard className="px-6 py-7 sm:px-8">
+                                <div className="flex items-center justify-between gap-4">
+                                    <div>
+                                        <p className="text-xs font-semibold uppercase tracking-[0.28em] text-ink-soft">
+                                            Skill Category
+                                        </p>
+                                        <h3 className="font-display mt-3 text-3xl font-bold tracking-tight text-ink">
+                                            {category}
+                                        </h3>
                                     </div>
-                                ))}
-                            </div>
-                        </SurfaceCard>
+                                    <div className="rounded-full border border-black/8 bg-shell-strong/65 px-4 py-2 text-sm font-semibold text-ink-soft">
+                                        {categorySkills.length} skills
+                                    </div>
+                                </div>
+
+                                <div className="mt-6 space-y-4">
+                                    {categorySkills.map((skill) => (
+                                        <motion.div
+                                            key={skill.name}
+                                            className="rounded-[1.5rem] border border-black/8 bg-white/80 px-5 py-5"
+                                            whileHover={
+                                                prefersReducedMotion
+                                                    ? undefined
+                                                    : { y: -3 }
+                                            }
+                                        >
+                                            <div className="flex items-start gap-4">
+                                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[1rem] border border-accent/15 bg-accent/8 font-display text-lg font-bold text-accent">
+                                                    {skillIcons[skill.icon] ??
+                                                        '#'}
+                                                </div>
+
+                                                <div className="min-w-0 flex-1">
+                                                    <div className="flex flex-wrap items-center justify-between gap-3">
+                                                        <h4 className="font-display text-xl font-bold tracking-tight text-ink">
+                                                            {skill.name}
+                                                        </h4>
+                                                        <span className="rounded-full border border-black/8 bg-shell-strong/65 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-ink-soft">
+                                                            {skill.proficiency_percentage ??
+                                                                0}
+                                                            %
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-shell-strong">
+                                                        <motion.div
+                                                            className="h-full rounded-full bg-linear-to-r from-accent to-accent-warm"
+                                                            initial={
+                                                                prefersReducedMotion
+                                                                    ? false
+                                                                    : {
+                                                                          width: 0,
+                                                                      }
+                                                            }
+                                                            whileInView={{
+                                                                width: `${skill.proficiency_percentage ?? 0}%`,
+                                                            }}
+                                                            viewport={{
+                                                                once: true,
+                                                                amount: 0.8,
+                                                            }}
+                                                            transition={{
+                                                                duration: 0.7,
+                                                                ease: [
+                                                                    0.22, 1,
+                                                                    0.36, 1,
+                                                                ],
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </SurfaceCard>
+                        </motion.div>
                     ))}
                 </div>
             )}
