@@ -35,6 +35,7 @@ npm run format
 Configure these values in `.env` or `.env.production`:
 
 - `CONTACT_NOTIFICATION_EMAIL` to receive new contact submissions by email
+- `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` for the seeded admin user
 - `SEO_SITE_NAME`, `SEO_DEFAULT_TITLE`, `SEO_DESCRIPTION`, `SEO_IMAGE`, `SEO_TWITTER_SITE`, and `SEO_AUTHOR` for metadata defaults
 - `APP_FORCE_HTTPS=true` and `ASSET_URL=https://your-domain.com` for production
 
