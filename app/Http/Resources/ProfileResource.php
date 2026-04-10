@@ -23,20 +23,6 @@ class ProfileResource extends JsonResource
             'profile_image' => $this->profile_image,
             'resume_url' => $this->resume_url,
             'is_active' => (bool) $this->is_active,
-            'skills' => SkillResource::collection($this->whenLoaded('skills')),
-            'experiences' => ExperienceResource::collection(
-                $this->whenLoaded('experiences'),
-            ),
-            'educations' => EducationResource::collection(
-                $this->whenLoaded('educations'),
-            ),
-            'projects' => ProjectResource::collection($this->whenLoaded('projects')),
-            'galleries' => GalleryResource::collection(
-                $this->whenLoaded('galleries'),
-            ),
-            'social_links' => SocialLinkResource::collection(
-                $this->whenLoaded('socialLinks'),
-            ),
             'updated_at' => $this->updated_at?->toIso8601String(),
         ];
     }

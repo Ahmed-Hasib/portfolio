@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Interfaces\ContactRepositoryInterface;
 use App\Interfaces\ProfileRepositoryInterface;
+use App\Repositories\ContactRepository;
 use App\Repositories\ProfileRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +18,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ProfileRepositoryInterface::class,
             ProfileRepository::class,
+        );
+
+        $this->app->bind(
+            ContactRepositoryInterface::class,
+            ContactRepository::class,
         );
     }
 
