@@ -90,6 +90,8 @@ class PortfolioContentApiTest extends TestCase
             'end_date' => null,
             'is_current' => true,
             'summary' => 'Led backend architecture decisions for client platforms.',
+            'technologies_used' => ['Laravel', 'React', 'MySQL'],
+            'achievements' => ['Standardized API delivery across projects.'],
             'sort_order' => 1,
         ]);
         $experience->setRelation('jobDescriptions', collect([
@@ -110,6 +112,11 @@ class PortfolioContentApiTest extends TestCase
         $response
             ->assertOk()
             ->assertJsonPath('data.0.company_name', 'Acme Studio')
+            ->assertJsonPath('data.0.technologies_used.0', 'Laravel')
+            ->assertJsonPath(
+                'data.0.achievements.0',
+                'Standardized API delivery across projects.',
+            )
             ->assertJsonPath(
                 'data.0.job_descriptions.0.description',
                 'Designed modular Laravel APIs and internal services.',

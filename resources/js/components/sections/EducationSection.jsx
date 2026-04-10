@@ -15,8 +15,8 @@ export default function EducationSection({ educations }) {
         <motion.section {...reveal} id="education" className="mt-8">
             <SectionHeading
                 eyebrow="Education"
-                title="Formal education and training kept separate from work history."
-                description="This section stays independently maintainable and can later support certifications or coursework without changing the rest of the page."
+                title="Academic background presented as a clear supporting layer to practical engineering work."
+                description="Education entries emphasize degree, field, institution, year range, and notable academic details in a concise resume-friendly format."
             />
 
             {educations.length === 0 ? (
@@ -31,30 +31,49 @@ export default function EducationSection({ educations }) {
                     {educations.map((education) => (
                         <SurfaceCard
                             key={`${education.institute}-${education.degree}`}
-                            className="px-6 py-7"
+                            className="overflow-hidden px-6 py-7"
                         >
-                            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-ink-soft">
-                                {education.start_year} -{' '}
-                                {education.end_year ?? 'Present'}
-                            </p>
-                            <h3 className="font-display mt-3 text-2xl font-bold tracking-tight text-ink">
-                                {education.degree}
-                            </h3>
-                            <p className="mt-2 text-base font-semibold text-accent">
-                                {education.institute}
-                            </p>
-                            {education.field ? (
-                                <p className="mt-4 text-sm leading-7 text-ink-soft">
-                                    Field: {education.field}
-                                </p>
-                            ) : null}
-                            {education.grade ? (
-                                <p className="mt-1 text-sm leading-7 text-ink-soft">
-                                    Grade: {education.grade}
-                                </p>
-                            ) : null}
+                            <div className="flex flex-wrap items-start justify-between gap-4">
+                                <div>
+                                    <p className="text-xs font-semibold uppercase tracking-[0.28em] text-ink-soft">
+                                        Academic Record
+                                    </p>
+                                    <h3 className="font-display mt-3 text-2xl font-bold tracking-tight text-ink">
+                                        {education.degree}
+                                    </h3>
+                                    <p className="mt-2 text-base font-semibold text-accent">
+                                        {education.institute}
+                                    </p>
+                                </div>
+
+                                <div className="rounded-full border border-black/8 bg-shell-strong/65 px-4 py-2 text-sm font-semibold text-ink-soft">
+                                    {education.start_year} -{' '}
+                                    {education.end_year ?? 'Present'}
+                                </div>
+                            </div>
+
+                            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                                <div className="rounded-[1.5rem] border border-black/8 bg-white/78 p-4">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink-soft">
+                                        Subject / Major
+                                    </p>
+                                    <p className="mt-3 text-sm leading-7 text-ink">
+                                        {education.field ?? 'Not specified'}
+                                    </p>
+                                </div>
+                                <div className="rounded-[1.5rem] border border-black/8 bg-white/78 p-4">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink-soft">
+                                        Result / Note
+                                    </p>
+                                    <p className="mt-3 text-sm leading-7 text-ink">
+                                        {education.grade ??
+                                            'Available on request'}
+                                    </p>
+                                </div>
+                            </div>
+
                             {education.summary ? (
-                                <p className="mt-4 text-sm leading-7 text-ink-soft">
+                                <p className="mt-5 text-sm leading-7 text-ink-soft">
                                     {education.summary}
                                 </p>
                             ) : null}

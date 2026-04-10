@@ -21,6 +21,8 @@ class Experience extends Model
         'end_date',
         'is_current',
         'summary',
+        'technologies_used',
+        'achievements',
         'sort_order',
     ];
 
@@ -33,6 +35,8 @@ class Experience extends Model
             'start_date' => 'date',
             'end_date' => 'date',
             'is_current' => 'boolean',
+            'technologies_used' => 'array',
+            'achievements' => 'array',
         ];
     }
 

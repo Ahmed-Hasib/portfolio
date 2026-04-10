@@ -22,6 +22,8 @@ class ExperienceResource extends JsonResource
             'end_date' => $this->end_date?->toDateString(),
             'is_current' => (bool) $this->is_current,
             'summary' => $this->summary,
+            'technologies_used' => $this->technologies_used ?? [],
+            'achievements' => $this->achievements ?? [],
             'sort_order' => $this->sort_order,
             'job_descriptions' => JobDescriptionResource::collection(
                 $this->whenLoaded('jobDescriptions'),
