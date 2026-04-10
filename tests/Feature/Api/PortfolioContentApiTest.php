@@ -163,7 +163,13 @@ class PortfolioContentApiTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertJsonPath('data.0.slug', 'hasib-portfolio-v2');
+            ->assertJsonPath('data.0.slug', 'hasib-portfolio-v2')
+            ->assertJsonPath('data.0.category', 'Portfolio Platform')
+            ->assertJsonPath('data.0.role', 'Full-Stack Developer')
+            ->assertJsonPath(
+                'data.0.full_description',
+                'A modern portfolio platform with API-driven sections and reusable frontend modules.',
+            );
     }
 
     public function test_project_detail_endpoint_returns_the_matching_project(): void
@@ -179,7 +185,9 @@ class PortfolioContentApiTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertJsonPath('data.slug', 'hasib-portfolio-v2');
+            ->assertJsonPath('data.slug', 'hasib-portfolio-v2')
+            ->assertJsonPath('data.category', 'Portfolio Platform')
+            ->assertJsonPath('data.role', 'Full-Stack Developer');
     }
 
     public function test_project_detail_endpoint_returns_not_found_for_unknown_slug(): void
@@ -308,6 +316,10 @@ class PortfolioContentApiTest extends TestCase
             'slug' => $slug,
             'thumbnail' => '/storage/projects/portfolio.png',
             'description' => 'Modern portfolio site built with Laravel and React.',
+            'full_description' =>
+                'A modern portfolio platform with API-driven sections and reusable frontend modules.',
+            'category' => 'Portfolio Platform',
+            'role' => 'Full-Stack Developer',
             'tech_stack' => ['Laravel', 'React', 'Tailwind CSS'],
             'live_url' => 'https://portfolio.example.com',
             'github_url' => 'https://github.com/hasib/portfolio',

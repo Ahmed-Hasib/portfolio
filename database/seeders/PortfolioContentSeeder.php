@@ -204,31 +204,54 @@ class PortfolioContentSeeder extends Seeder
             ]);
         }
 
-        if ($profile->projects()->doesntExist()) {
-            $profile->projects()->createMany([
-                [
-                    'title' => 'Hasib Portfolio v2',
-                    'slug' => 'hasib-portfolio-v2',
-                    'thumbnail' => '/storage/projects/portfolio-v2.png',
-                    'description' => 'A modern animated portfolio built with Laravel, React, Tailwind CSS, and Framer Motion.',
-                    'tech_stack' => ['Laravel', 'React', 'Tailwind CSS', 'Vite'],
-                    'live_url' => 'https://portfolio.example.com',
-                    'github_url' => 'https://github.com/hasib/portfolio',
-                    'featured' => true,
-                    'sort_order' => 1,
-                ],
-                [
-                    'title' => 'Project Tracker',
-                    'slug' => 'project-tracker',
-                    'thumbnail' => '/storage/projects/project-tracker.png',
-                    'description' => 'Internal dashboard for tracking delivery milestones, team ownership, and reporting.',
-                    'tech_stack' => ['Laravel', 'MySQL', 'Tailwind CSS'],
-                    'live_url' => null,
-                    'github_url' => 'https://github.com/hasib/project-tracker',
-                    'featured' => false,
-                    'sort_order' => 2,
-                ],
-            ]);
+        foreach ([
+            [
+                'title' => 'Hasib Portfolio v2',
+                'slug' => 'hasib-portfolio-v2',
+                'thumbnail' => '/storage/projects/portfolio-v2.png',
+                'description' => 'A modern animated portfolio built with Laravel, React, Tailwind CSS, and Framer Motion.',
+                'full_description' => 'Designed and implemented a full-stack portfolio platform inside a single Laravel codebase with React running through Vite. The project emphasizes maintainable backend architecture, reusable UI sections, polished storytelling, and recruiter-friendly presentation across hero, resume, and project showcase areas.',
+                'category' => 'Portfolio Platform',
+                'role' => 'Product Designer and Full-Stack Developer',
+                'tech_stack' => ['Laravel', 'React', 'Tailwind CSS', 'Vite', 'Framer Motion'],
+                'live_url' => 'https://portfolio.example.com',
+                'github_url' => 'https://github.com/hasib/portfolio',
+                'featured' => true,
+                'sort_order' => 1,
+            ],
+            [
+                'title' => 'Project Tracker',
+                'slug' => 'project-tracker',
+                'thumbnail' => '/storage/projects/project-tracker.png',
+                'description' => 'Internal dashboard for tracking delivery milestones, team ownership, and reporting.',
+                'full_description' => 'Built as an operations-focused dashboard for teams that needed clearer ownership, deadline tracking, and executive reporting. The application concentrated on usable information density, backend reporting queries, and simple but dependable UI flows for everyday internal usage.',
+                'category' => 'Internal Tool',
+                'role' => 'Backend Lead and Dashboard Implementer',
+                'tech_stack' => ['Laravel', 'MySQL', 'Tailwind CSS'],
+                'live_url' => null,
+                'github_url' => 'https://github.com/hasib/project-tracker',
+                'featured' => false,
+                'sort_order' => 2,
+            ],
+            [
+                'title' => 'Commerce Landing System',
+                'slug' => 'commerce-landing-system',
+                'thumbnail' => '/storage/projects/commerce-landing-system.png',
+                'description' => 'Marketing-focused landing pages and conversion flows for product campaigns.',
+                'full_description' => 'Created a reusable campaign landing system designed for fast content iteration, cleaner component reuse, and high-clarity mobile presentation. The work focused on frontend polish, CMS-friendly structures, and developer workflows that made new campaign launches faster and safer.',
+                'category' => 'Marketing Site',
+                'role' => 'Frontend Engineer',
+                'tech_stack' => ['React', 'Tailwind CSS', 'Laravel API'],
+                'live_url' => 'https://commerce.example.com',
+                'github_url' => null,
+                'featured' => true,
+                'sort_order' => 3,
+            ],
+        ] as $project) {
+            $profile->projects()->updateOrCreate(
+                ['slug' => $project['slug']],
+                $project,
+            );
         }
 
         if ($profile->galleries()->doesntExist()) {
