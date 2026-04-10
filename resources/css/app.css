@@ -1,0 +1,80 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../**/*.jsx';
+
+@theme {
+    --font-sans:
+        'Manrope', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    --color-shell: #f7f3ea;
+    --color-shell-strong: #ebe2d0;
+    --color-ink: #102229;
+    --color-ink-soft: #4d6768;
+    --color-accent: #0f766e;
+    --color-accent-warm: #dd6b20;
+}
+
+@layer base {
+    :root {
+        color-scheme: light;
+    }
+
+    * {
+        @apply box-border;
+    }
+
+    html {
+        @apply scroll-smooth;
+    }
+
+    body {
+        @apply min-h-screen bg-shell text-ink antialiased;
+        background-image:
+            radial-gradient(
+                circle at top left,
+                rgba(15, 118, 110, 0.16),
+                transparent 32%
+            ),
+            radial-gradient(
+                circle at top right,
+                rgba(221, 107, 32, 0.16),
+                transparent 28%
+            ),
+            linear-gradient(180deg, #f9f5ee 0%, #f2ede2 100%);
+    }
+
+    body::selection {
+        @apply bg-accent/20 text-ink;
+    }
+
+    a {
+        @apply transition-colors duration-200;
+    }
+
+    #app {
+        @apply min-h-screen;
+    }
+}
+
+@layer components {
+    .surface-card {
+        @apply rounded-[2rem] border border-black/8 bg-white/72 shadow-[0_24px_80px_-40px_rgba(16,34,41,0.45)] backdrop-blur;
+    }
+
+    .section-label {
+        @apply inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/8 px-4 py-2 text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-accent;
+    }
+
+    .nav-link {
+        @apply text-sm font-semibold text-ink-soft hover:text-ink;
+    }
+
+    .pill {
+        @apply rounded-full border border-black/8 bg-white/80 px-3 py-2 text-sm font-medium text-ink-soft;
+    }
+}
