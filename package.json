@@ -10,9 +10,18 @@
         "lint": "eslint resources/js --ext .js,.jsx"
     },
     "dependencies": {
+        "@emailjs/browser": "^4.4.1",
+        "bootstrap": "^5.3.7",
         "framer-motion": "^12.10.0",
+        "gsap": "^3.13.0",
+        "odometer": "^0.4.8",
         "react": "^19.1.0",
-        "react-dom": "^19.1.0"
+        "react-dom": "^19.1.0",
+        "react-router-dom": "^7.7.1",
+        "react-toastify": "^11.0.5",
+        "sass": "^1.89.2",
+        "swiper": "^11.2.10",
+        "wow.js": "^1.2.2"
     },
     "devDependencies": {
         "@eslint/js": "^9.25.1",

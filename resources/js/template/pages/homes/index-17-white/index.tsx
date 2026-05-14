@@ -1,0 +1,51 @@
+import About from "@/components/common/About";
+
+import Contact from "@/components/common/Contact";
+import Facts2 from "@/components/common/Facts2";
+import Portofolio from "@/components/common/Portfolio";
+import Pricing from "@/components/common/Pricing";
+
+import Skills3 from "@/components/common/Skills3";
+import Footer4 from "@/components/footers/Footer4";
+import Header2 from "@/components/headers/Header2";
+
+import Hero from "@/components/homes/home-17/Hero";
+import Services from "@/components/common/Services5";
+import Blogs from "@/components/common/Blogs2";
+
+import MetaComponent from "@/components/common/Metacomponent";
+
+const metadata = {
+  title:
+    "Home 17 || Personal Portfolio Reactjs Template | Freelancer & Developer Portfolio",
+  description:
+    "Personal Portfolio Reactjs Template | Freelancer & Developer Portfolio",
+};
+export default function HomePage17White() {
+  return (
+    <>
+      <MetaComponent meta={metadata} />
+      <div className="tmp-white-version">
+        <div className="spybody color-blue">
+          <Header2
+            darkLogo="/assets/images/logo/white-logo-reeni-3.png"
+            lightLogo="/assets/images/logo/logo-blue-white.svg"
+          />
+          <Hero />
+          <Services />
+          <About parentClass="about-us-area tmp-section-gapBottom" />
+          <Facts2 />
+          <Skills3 />
+          <Portofolio isLight />
+          <Pricing parentClass="our-price-plan-area tmp-section-gapBottom" />
+          <Contact parentClass="get-in-touch-area" />
+          <Blogs isLight parentClass="blog-and-news-are tmp-section-gapTop" />
+          <Footer4
+            darkLogo="/assets/images/logo/white-logo-reeni-3.png"
+            lightLogo="/assets/images/logo/logo-blue-white.svg"
+          />
+        </div>
+      </div>
+    </>
+  );
+}
