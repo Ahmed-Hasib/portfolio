@@ -1106,8 +1106,12 @@
   position: relative;
 
   img {
+    aspect-ratio: 1 / 1;
     border: 2px solid var(--color-primary);
     border-radius: 100%;
+    height: min(531px, 78vw);
+    object-fit: cover;
+    width: min(531px, 78vw);
   }
 
   &::after {

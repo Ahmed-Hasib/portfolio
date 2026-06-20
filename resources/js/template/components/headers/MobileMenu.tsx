@@ -39,23 +39,8 @@ export default function MobileMenu() {
         <div ref={innerRef} className="inner">
           <div className="header-top">
             <div className="logo">
-              <a href="index.html" className="logo-area">
-                <img
-                  loading="lazy"
-                  className="logo-dark"
-                  alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                  src="/assets/images/logo/white-logo-reeni.png"
-                  width={121}
-                  height={41}
-                />
-                <img
-                  loading="lazy"
-                  className="logo-white"
-                  alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                  src="/assets/images/logo/logo-white.png"
-                  width={121}
-                  height={40}
-                />
+              <a href="/" className="logo-area text-logo" aria-label="Hasib home">
+                Hasib
               </a>
             </div>
             <div className="close-menu">

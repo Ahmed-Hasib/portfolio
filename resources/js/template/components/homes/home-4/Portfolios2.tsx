@@ -1,7 +1,39 @@
 import { Link } from "react-router-dom";
-import { portfolioItems9 } from "@/data/portfolio";
 
-export default function Portfolios2({ isLight = false }) {
+const onlineProjectImages = [
+  "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1100&q=80",
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1100&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1100&q=80",
+  "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1100&q=80",
+];
+
+function resolveProjectImage(project, index) {
+  if (project?.thumbnail?.startsWith("http")) {
+    return project.thumbnail;
+  }
+
+  return onlineProjectImages[index % onlineProjectImages.length];
+}
+
+function buildProjectCard(project, index) {
+  return {
+    id: project.id ?? index,
+    animationOrder: (index % 4) + 1,
+    imageSrc: resolveProjectImage(project, index),
+    width: 1134,
+    height: 760,
+    title: project.title,
+    tags: project.tech_stack?.length
+      ? project.tech_stack.slice(0, 3)
+      : [project.category || "Web App"],
+    buttonText: "View Details",
+    slug: project.slug,
+  };
+}
+
+export default function Portfolios2({ projects = [] }) {
+  const items = projects.slice(0, 4).map(buildProjectCard);
+
   return (
     <section className="tmp-latest-portfolio tmp-section-gapTop">
       <div className="container">
@@ -24,7 +56,7 @@ export default function Portfolios2({ isLight = false }) {
           </div>
         </div>
         <div className="row g-5">
-          {portfolioItems9.map((item) => (
+          {items.map((item) => (
             <div className="col-lg-6 col-md-6 col-12" key={item.id}>
               <div
                 className={`latest-portfolio-card-style-two tmponhover tmp-scroll-trigger tmp-fade-in animation-order-${item.animationOrder}`}
@@ -32,9 +64,7 @@ export default function Portfolios2({ isLight = false }) {
                 <div className="portfoli-card-img">
                   <div className="img-box v2">
                     <Link
-                      to={`/project-details${isLight ? "-white" : ""}/${
-                        item.slug
-                      }`}
+                      to={`/portfolio-details/${item.slug}`}
                     >
                       <img
                         loading="lazy"
@@ -59,9 +89,7 @@ export default function Portfolios2({ isLight = false }) {
                   <div className="content-left">
                     <h3 className="portfolio-card-title">
                       <Link
-                        to={`/project-details${isLight ? "-white" : ""}/${
-                          item.slug
-                        }`}
+                        to={`/portfolio-details/${item.slug}`}
                       >
                         {item.title}
                       </Link>
@@ -81,9 +109,7 @@ export default function Portfolios2({ isLight = false }) {
                   <div className="tmp-button-here">
                     <Link
                       className="tmp-btn hover-icon-reverse radius-round btn-border btn-md"
-                      to={`/project-details${isLight ? "-white" : ""}/${
-                        item.slug
-                      }`}
+                      to={`/portfolio-details/${item.slug}`}
                     >
                       <span className="icon-reverse-wrapper">
                         <span className="btn-text">{item.buttonText}</span>

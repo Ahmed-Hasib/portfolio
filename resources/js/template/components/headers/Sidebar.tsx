@@ -11,23 +11,8 @@ export default function Sidebar() {
       >
         <div className="inner">
           <div className="top-area">
-            <a href="index.html" className="logo">
-              <img
-                loading="lazy"
-                className="logo-dark"
-                alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                src="/assets/images/logo/white-logo-reeni.png"
-                width={121}
-                height={41}
-              />
-              <img
-                loading="lazy"
-                className="logo-white"
-                alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                src="/assets/images/logo/logo-white.png"
-                width={121}
-                height={40}
-              />
+            <a href="/" className="logo text-logo" aria-label="Hasib home">
+              Hasib
             </a>
             <div className="close-icon-area">
               <button

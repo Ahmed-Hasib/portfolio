@@ -1,5 +1,29 @@
-import { expertiseItems } from "@/data/expertise";
-export default function Experiences2() {
+function formatExperienceDates(experience) {
+  const startYear = experience.start_date?.slice(0, 4);
+  const endYear = experience.is_current
+    ? "Present"
+    : experience.end_date?.slice(0, 4);
+
+  return [startYear, endYear].filter(Boolean).join(" - ");
+}
+
+function buildExperienceDescription(experience) {
+  if (experience.summary) {
+    return experience.summary;
+  }
+
+  if (experience.job_descriptions?.length > 0) {
+    return experience.job_descriptions[0].description;
+  }
+
+  if (experience.achievements?.length > 0) {
+    return experience.achievements[0];
+  }
+
+  return "Professional experience managed from the admin panel.";
+}
+
+export default function Experiences2({ experiences = [] }) {
   return (
     <section className="my-expertise-area tpm-custom-box-bg">
       <div className="container">
@@ -22,11 +46,15 @@ export default function Experiences2() {
           </div>
         </div>
         <div className="services-widget v2">
-          {expertiseItems.map((item, index) => (
+          {experiences.map((experience, index) => {
+            const percentage = Math.max(70, 95 - index * 5);
+            const dates = formatExperienceDates(experience);
+
+            return (
             <div
               className={`service-item tmp-scroll-trigger tmp-fade-in ${
                 index == 0 ? "current" : ""
-              } animation-order-${item.animationOrder}`}
+              } animation-order-${(index % 4) + 1}`}
               key={index}
             >
               <div className="my-expertise-card-wrap">
@@ -35,12 +63,12 @@ export default function Experiences2() {
                     <img
                       loading="lazy"
                       alt="logo"
-                      src={item.icon}
+                      src="/assets/images/my-expertise/logo-4.svg"
                       width={45}
                       height={45}
                     />
                   </div>
-                  <h3 className="title">{item.title}</h3>
+                  <h3 className="title">{experience.role}</h3>
                 </div>
                 <div
                   className="single-progress-circle sal-animate"
@@ -50,7 +78,7 @@ export default function Experiences2() {
                 >
                   <svg
                     className="radial-progress"
-                    data-countervalue={item.counterValue}
+                    data-countervalue={percentage}
                     viewBox="0 0 80 80"
                   >
                     <circle className="bar-static" cx={40} cy={40} r={35} />
@@ -67,15 +95,21 @@ export default function Experiences2() {
                       y="55%"
                       transform="matrix(0, 1, -1, 0, 80, 0)"
                     >
-                      {item.percentage}
+                      {percentage}%
                     </text>
                   </svg>
                 </div>
-                <p className="para">{item.description}</p>
+                <p className="para">
+                  <strong>{experience.company_name}</strong>
+                  {dates ? ` | ${dates}` : ""}
+                  <br />
+                  {buildExperienceDescription(experience)}
+                </p>
               </div>
               <button className="service-link modal-popup" />
             </div>
-          ))}
+            );
+          })}
           <div className="active-bg wow fadeInUp mleave" />
         </div>
       </div>

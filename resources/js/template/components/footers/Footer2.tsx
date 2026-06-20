@@ -1,16 +1,10 @@
 import { Link } from "react-router-dom";
-import Demomodal from "../modals/Demomodal";
-import Chat from "../common/Chat";
-import DemoToggler from "../common/DemoToggler";
 import ScrollTop from "../common/ScrollTop";
 import Sidebar from "../headers/Sidebar";
 import MobileMenu from "../headers/MobileMenu";
 import MobileMenuOnepage from "../headers/MobileMenuOnepage";
 import { footerLinks, footerLinksWhite } from "@/data/footerLinks";
-export default function Footer2({
-  darkLogo = "/assets/images/logo/white-logo-reeni.png",
-  lightLogo = "/assets/images/logo/logo-white.png",
-}) {
+export default function Footer2({ logoText = "Hasib" }) {
   return (
     <>
       <footer className="footer-area footer-style-two-wrapper bg-color-footer bg_images tmp-section-gap">
@@ -20,23 +14,8 @@ export default function Footer2({
               <div className="col-lg-3 col-md-4 col-sm-6">
                 <div className="single-footer-wrapper border-right mr--20">
                   <div className="logo">
-                    <Link to={`/`}>
-                      <img
-                        loading="lazy"
-                        className="logo-dark"
-                        alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                        src={darkLogo}
-                        width={121}
-                        height={41}
-                      />
-                      <img
-                        loading="lazy"
-                        className="logo-white"
-                        alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                        src={lightLogo}
-                        width={121}
-                        height={40}
-                      />
+                    <Link to={`/`} className="text-logo" aria-label={`${logoText} home`}>
+                      {logoText}
                     </Link>
                   </div>
                   <p className="description">
@@ -127,9 +106,7 @@ export default function Footer2({
           </div>
         </div>
       </footer>{" "}
-      <Demomodal />
-      <Chat />
-      <DemoToggler /> <ScrollTop />
+      <ScrollTop />
       <Sidebar />
       <MobileMenu />
       <MobileMenuOnepage />

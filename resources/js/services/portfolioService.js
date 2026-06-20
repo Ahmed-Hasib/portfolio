@@ -2,33 +2,41 @@ import apiClient from './apiClient';
 
 const unwrapData = (response) => response.data.data;
 
-export async function getPortfolioContent() {
-    const [
-        profileResponse,
-        skillsResponse,
-        experiencesResponse,
-        educationsResponse,
-        projectsResponse,
-        galleriesResponse,
-        socialLinksResponse,
-    ] = await Promise.all([
-        apiClient.get('/api/profile'),
-        apiClient.get('/api/skills'),
-        apiClient.get('/api/experiences'),
-        apiClient.get('/api/educations'),
-        apiClient.get('/api/projects'),
-        apiClient.get('/api/galleries'),
-        apiClient.get('/api/social-links'),
-    ]);
+export async function getPortfolioContent(onPartialContent) {
+    const profileRequest = apiClient.get('/api/profile').then(unwrapData);
+    const skillsRequest = apiClient.get('/api/skills').then(unwrapData);
+    const experiencesRequest = apiClient
+        .get('/api/experiences')
+        .then(unwrapData);
+    const educationsRequest = apiClient.get('/api/educations').then(unwrapData);
+    const projectsRequest = apiClient.get('/api/projects').then(unwrapData);
+    const galleriesRequest = apiClient.get('/api/galleries').then(unwrapData);
+    const socialLinksRequest = apiClient
+        .get('/api/social-links')
+        .then(unwrapData);
+
+    const profile = await profileRequest;
+
+    onPartialContent?.({ profile });
+
+    const [skills, experiences, educations, projects, galleries, socialLinks] =
+        await Promise.all([
+            skillsRequest,
+            experiencesRequest,
+            educationsRequest,
+            projectsRequest,
+            galleriesRequest,
+            socialLinksRequest,
+        ]);
 
     return {
-        profile: unwrapData(profileResponse),
-        skills: unwrapData(skillsResponse),
-        experiences: unwrapData(experiencesResponse),
-        educations: unwrapData(educationsResponse),
-        projects: unwrapData(projectsResponse),
-        galleries: unwrapData(galleriesResponse),
-        socialLinks: unwrapData(socialLinksResponse),
+        profile,
+        skills,
+        experiences,
+        educations,
+        projects,
+        galleries,
+        socialLinks,
     };
 }
 

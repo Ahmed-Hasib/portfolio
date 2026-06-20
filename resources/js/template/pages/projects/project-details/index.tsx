@@ -1,11 +1,11 @@
 import Copyright from "@/components/footers/Copyright";
-import Footer3 from "@/components/footers/Footer3";
+import Footer2 from "@/components/footers/Footer2";
 import Header1 from "@/components/headers/Header1";
 import ProjectDetails from "@/components/projects/ProjectDetails";
-import { allPortfolioItems } from "@/data/portfolio";
 import { Link, useParams } from "react-router-dom";
 
 import MetaComponent from "@/components/common/Metacomponent";
+import usePortfolioContent from "../../../../hooks/usePortfolioContent";
 
 const metadata = {
   title:
@@ -16,8 +16,11 @@ const metadata = {
 export default function ProjectDetailsPage() {
   const params = useParams();
   const { slug } = params;
+  const { projects, status } = usePortfolioContent();
   const portfolioItem =
-    allPortfolioItems.find((blog) => blog.slug == slug) || allPortfolioItems[0];
+    projects.find((project) => project.slug == slug) || projects[0];
+  const pageTitle = portfolioItem?.title || "Project Details";
+
   return (
     <>
       <MetaComponent meta={metadata} />
@@ -27,7 +30,7 @@ export default function ProjectDetailsPage() {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcrumb-inner text-center">
-                <h1 className="title split-collab">{portfolioItem.title}</h1>
+                <h1 className="title split-collab">{pageTitle}</h1>
                 <ul className="page-list">
                   <li className="tmp-breadcrumb-item">
                     <Link to={`/`}>Home</Link>
@@ -44,8 +47,8 @@ export default function ProjectDetailsPage() {
           </div>
         </div>
       </div>
-      <ProjectDetails portfolioItem={portfolioItem} />
-      <Footer3 />
+      <ProjectDetails portfolioItem={portfolioItem} isLoading={status === "loading"} />
+      <Footer2 />
       <Copyright />
     </>
   );

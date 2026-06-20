@@ -1,15 +1,67 @@
 import Appointment from "./Appointment";
-type PortfolioItem = {
-  imageSrc: string;
-  title: string;
-  // Add other properties as needed
-};
 
-interface ProjectDetailsProps {
-  portfolioItem: PortfolioItem;
+const onlineProjectImages = [
+  "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1400&q=80",
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=80",
+];
+
+function resolveProjectImage(project, index = 0) {
+  if (project?.thumbnail?.startsWith("http")) {
+    return project.thumbnail;
+  }
+
+  return onlineProjectImages[index % onlineProjectImages.length];
 }
 
-export default function ProjectDetails({ portfolioItem }: ProjectDetailsProps) {
+function stripHtml(value) {
+  if (!value) {
+    return "";
+  }
+
+  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+type ProjectDetailsProps = {
+  portfolioItem?: {
+    title?: string;
+    thumbnail?: string;
+    description?: string;
+    full_description?: string;
+    category?: string;
+    role?: string;
+    tech_stack?: string[];
+    live_url?: string;
+    github_url?: string;
+  };
+  isLoading?: boolean;
+}
+
+export default function ProjectDetails({
+  portfolioItem,
+  isLoading = false,
+}: ProjectDetailsProps) {
+  if (!portfolioItem) {
+    return (
+      <div className="project-details-area-wrapper tmp-section-gap">
+        <div className="container">
+          <p className="docs">
+            {isLoading ? "Loading project details..." : "No project found."}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const image = resolveProjectImage(portfolioItem);
+  const description = stripHtml(
+    portfolioItem.full_description || portfolioItem.description
+  );
+  const shortDescription = stripHtml(portfolioItem.description);
+  const stack = portfolioItem.tech_stack?.length
+    ? portfolioItem.tech_stack
+    : [portfolioItem.category || "Web Application"];
+
   return (
     <div className="project-details-area-wrapper tmp-section-gap">
       <div className="container">
@@ -19,7 +71,7 @@ export default function ProjectDetails({ portfolioItem }: ProjectDetailsProps) {
               <img
                 loading="lazy"
                 alt="thumbnail"
-                src={portfolioItem.imageSrc}
+                src={image}
                 width={1290}
                 height={560}
               />
@@ -29,56 +81,33 @@ export default function ProjectDetails({ portfolioItem }: ProjectDetailsProps) {
             <div className="project-details-content-wrap">
               <h2 className="title">{portfolioItem.title}</h2>
               <p className="docs">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a
-                galltype and scrambled it to make a type specimen book. It has
-                survived not only five centuries tinto electronic typesetting
-                remaining essentially unchanged
+                {description ||
+                  "This project is managed from the admin panel and will show more details as content is added."}
               </p>
-              <p className="docs">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown print
-              </p>
+              {shortDescription && shortDescription !== description ? (
+                <p className="docs">{shortDescription}</p>
+              ) : null}
               <div className="check-box-wrap">
                 <ul>
-                  <li>
-                    <h4 className="check-box-item">
-                      <span>
-                        <i className="fa-solid fa-circle-check" />
-                      </span>
-                      Ui/visual Design
-                    </h4>
-                  </li>
-                  <li>
-                    <h4 className="check-box-item">
-                      <span>
-                        <i className="fa-solid fa-circle-check" />
-                      </span>
-                      App Development
-                    </h4>
-                  </li>
-                  <li>
-                    <h4 className="check-box-item">
-                      <span>
-                        <i className="fa-solid fa-circle-check" />
-                      </span>
-                      Software Developer
-                    </h4>
-                  </li>
+                  {stack.slice(0, 5).map((technology) => (
+                    <li key={technology}>
+                      <h4 className="check-box-item">
+                        <span>
+                          <i className="fa-solid fa-circle-check" />
+                        </span>
+                        {technology}
+                      </h4>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <h2 className="mini-title">
-                Elevate Your Business with IT Solutions
+                {portfolioItem.role || "Project Scope"}
               </h2>
               <p className="docs">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a
-                galltype and scrambled it to make a type specimen book. It has
-                survived not only five centuries tinto electronic typesetting
-                remaining essentially unchanged
+                {portfolioItem.category
+                  ? `Category: ${portfolioItem.category}`
+                  : "Built as a portfolio project with a focus on practical implementation and presentation."}
               </p>
               <div className="project-details-swiper-wrapper">
                 <div className="swiper project-details-swiper">
@@ -88,7 +117,7 @@ export default function ProjectDetails({ portfolioItem }: ProjectDetailsProps) {
                         <img
                           loading="lazy"
                           alt="swiper-img"
-                          src="/assets/images/projects-details/project-detials-swiper-img-1.jpg"
+                          src={onlineProjectImages[0]}
                           width={410}
                           height={295}
                         />
@@ -99,7 +128,7 @@ export default function ProjectDetails({ portfolioItem }: ProjectDetailsProps) {
                         <img
                           loading="lazy"
                           alt="swiper-img"
-                          src="/assets/images/projects-details/project-detials-swiper-img-2.png"
+                          src={onlineProjectImages[1]}
                           width={410}
                           height={295}
                         />
@@ -110,7 +139,7 @@ export default function ProjectDetails({ portfolioItem }: ProjectDetailsProps) {
                         <img
                           loading="lazy"
                           alt="swiper-img"
-                          src="/assets/images/projects-details/project-detials-swiper-img-1.jpg"
+                          src={onlineProjectImages[2]}
                           width={410}
                           height={295}
                         />
@@ -145,17 +174,27 @@ export default function ProjectDetails({ portfolioItem }: ProjectDetailsProps) {
               </div>
               <div className="body">
                 <div className="project-details-info">
-                  Name: <span>Hosting vps</span>
+                  Name: <span>{portfolioItem.title}</span>
                 </div>
                 <div className="project-details-info">
-                  Author: <span>Nadimul Islam</span>
+                  Role: <span>{portfolioItem.role || "Developer"}</span>
                 </div>
                 <div className="project-details-info">
-                  Date: <span>23 January,2024</span>
+                  Category: <span>{portfolioItem.category || "Portfolio"}</span>
                 </div>
                 <div className="project-details-info">
-                  Tags: <span>Host Web Design</span>
+                  Tags: <span>{stack.join(", ")}</span>
                 </div>
+                {portfolioItem.live_url ? (
+                  <div className="project-details-info">
+                    Live: <span>{portfolioItem.live_url}</span>
+                  </div>
+                ) : null}
+                {portfolioItem.github_url ? (
+                  <div className="project-details-info">
+                    Code: <span>{portfolioItem.github_url}</span>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>

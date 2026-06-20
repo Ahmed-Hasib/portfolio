@@ -9,7 +9,7 @@ export default function About({ parentClass = "about-us-area" }) {
             <div className="about-us-left-content-wrap bg-vactor-one">
               <div className="years-of-experience-card tmp-scroll-trigger tmp-fade-in animation-order-1">
                 <h2 className="counter card-title">
-                  <OdometerComponent max={10} /> +
+                  <OdometerComponent max={6} /> +
                 </h2>
                 <p className="card-para">years of experience</p>
               </div>
@@ -20,8 +20,8 @@ export default function About({ parentClass = "about-us-area" }) {
                   </div>
                 </div>
                 <div className="card-info">
-                  <h3 className="card-title">Ui/Ux Design</h3>
-                  <p className="card-para">241 Projects</p>
+                  <h3 className="card-title">System Design</h3>
+                  <p className="card-para">Designed & Created</p>
                 </div>
               </div>
             </div>

@@ -1,5 +1,31 @@
 import { Link } from "react-router-dom";
-export default function Hero() {
+
+function resolveAssetUrl(path) {
+  if (!path) {
+    return null;
+  }
+
+  if (path.startsWith("http://") || path.startsWith("https://")) {
+    return path;
+  }
+
+  return `/${path.replace(/^\/+/, "")}`;
+}
+
+function stripHtml(value) {
+  if (!value) {
+    return "";
+  }
+
+  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+export default function Hero({ profile }) {
+  const fullName = profile?.full_name || "";
+  const designation = profile?.designation || "";
+  const description = stripHtml(profile?.bio);
+  const profileImage = resolveAssetUrl(profile?.profile_image);
+
   return (
     <div className="rpp-banner-six-area">
       <div className="container">
@@ -8,27 +34,28 @@ export default function Hero() {
             <div className="col-lg-7 order-lg-2">
               <div className="banner-right-content">
                 <div className="bg-benner-img-six">
-                  <img
-                    className="tmp-scroll-trigger tmp-zoom-in animation-order-1"
-                    alt="banner-img-3"
-                    src="/assets/images/banner/banner-user-image-six.png"
-                    width={531}
-                    height={531}
-                  />
+                  {profileImage ? (
+                    <img
+                      className="tmp-scroll-trigger tmp-zoom-in animation-order-1"
+                      alt={fullName}
+                      src={profileImage}
+                      width={531}
+                      height={531}
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>
             <div className="col-lg-5 order-lg-1">
               <div className="inner">
                 <span className="sub-title tmp-scroll-trigger tmp-fade-in animation-order-1">
-                  Web Developer
+                  {designation}
                 </span>
                 <h1 className="title tmp-scroll-trigger tmp-fade-in animation-order-2">
-                  Jackson Clark
+                  {fullName}
                 </h1>
                 <p className="description tmp-scroll-trigger tmp-fade-in animation-order-3">
-                  Outsourcing can provide corporate businesses with several
-                  advantages, incl b usinesses Outsourcing can provide
+                  {description}
                 </p>
                 <div className="button-area-banner-three tmp-scroll-trigger tmp-fade-in animation-order-4">
                   <Link

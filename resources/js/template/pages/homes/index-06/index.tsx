@@ -3,7 +3,6 @@ import Contact from "@/components/common/Contact";
 import Experiences2 from "@/components/common/Experiences2";
 import Skills3 from "@/components/common/Skills3";
 import Testimonials from "@/components/common/Testimonials";
-import TextAnim from "@/components/common/TextAnim";
 import Copyright from "@/components/footers/Copyright";
 import Footer2 from "@/components/footers/Footer2";
 import Header1 from "@/components/headers/Header1";
@@ -14,6 +13,7 @@ import Portfolios2 from "@/components/homes/home-4/Portfolios2";
 import Pricing from "@/components/homes/home-4/Pricing";
 
 import MetaComponent from "@/components/common/Metacomponent";
+import usePortfolioContent from "../../../../hooks/usePortfolioContent";
 
 const metadata = {
   title:
@@ -22,29 +22,24 @@ const metadata = {
     "Personal Portfolio Reactjs Template | Freelancer & Developer Portfolio",
 };
 export default function HomePage6() {
+  const { profile, skills, experiences, projects } = usePortfolioContent();
+
   return (
     <>
       <MetaComponent meta={metadata} />
       <div className="color-primary-3rd">
-        <Header1
-          darkLogo="/assets/images/logo/white-logo-reeni-3.png"
-          lightLogo="/assets/images/logo/logo-white-3.png"
-        />
-        <Hero />
-        <TextAnim />
+        <Header1 />
+        <Hero profile={profile} />
         <About />
-        <Portfolio />
-        <Experiences2 />
+        <Portfolio projects={projects} />
+        <Experiences2 experiences={experiences} />
         <Testimonials />
-        <Skills3 />
-        <Portfolios2 />
+        <Skills3 skills={skills} />
+        <Portfolios2 projects={projects} />
         <Pricing />
         <Contact />
         <Blogs />
-        <Footer2
-          darkLogo="/assets/images/logo/white-logo-reeni-3.png"
-          lightLogo="/assets/images/logo/logo-white-3.png"
-        />
+        <Footer2 />
         <Copyright />
       </div>
     </>

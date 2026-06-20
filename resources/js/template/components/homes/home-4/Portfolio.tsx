@@ -1,23 +1,52 @@
 import { Link } from "react-router-dom";
-import { portfolioItems8 } from "@/data/portfolio";
 import { useMemo, useState } from "react";
-export default function Portfolio({ isLight = false }) {
-  const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = [
-    "All",
-    "Branding",
-    "Design",
-    "Content writing",
-    "Marketing",
-  ];
+const onlineProjectImages = [
+  "https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+];
+
+function resolveProjectImage(project, index) {
+  if (project?.thumbnail?.startsWith("http")) {
+    return project.thumbnail;
+  }
+
+  return onlineProjectImages[index % onlineProjectImages.length];
+}
+
+function buildPortfolioItem(project, index) {
+  return {
+    id: project.id ?? index,
+    imageSrc: resolveProjectImage(project, index),
+    width: 900,
+    height: 700,
+    title: project.title,
+    description: project.category || "Web Application",
+    categories: [project.category || "Web Application"],
+    slug: project.slug,
+  };
+}
+
+export default function Portfolio({ projects = [] }) {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const items = useMemo(
+    () => projects.slice(0, 6).map(buildPortfolioItem),
+    [projects]
+  );
+
+  const categories = useMemo(
+    () => ["All", ...new Set(items.flatMap((item) => item.categories))],
+    [items]
+  );
   const filtered = useMemo(() => {
     return activeCategory === "All"
-      ? portfolioItems8
-      : portfolioItems8.filter((item) =>
+      ? items
+      : items.filter((item) =>
           item.categories.includes(activeCategory)
         );
-  }, [activeCategory]);
+  }, [activeCategory, items]);
   return (
     <section className="tmp-portfolio-area tmp-section-gap">
       <div className="container">
@@ -70,20 +99,14 @@ export default function Portfolio({ isLight = false }) {
                             {item.description}
                           </p>
                           <h3 className="portfolio-card-title animated fadeIn">
-                            <Link
-                              to={`/project-details${isLight ? "-white" : ""}/${
-                                item.slug
-                              }`}
-                            >
+                            <Link to={`/portfolio-details/${item.slug}`}>
                               {item.title}
                             </Link>
                           </h3>
                         </div>
                         <div className="portfolio-btn">
                           <Link
-                            to={`/project-details${isLight ? "-white" : ""}/${
-                              item.slug
-                            }`}
+                            to={`/portfolio-details/${item.slug}`}
                             className="tmp-arrow-icon-btn"
                           >
                             <div className="btn-inner">
@@ -94,9 +117,7 @@ export default function Portfolio({ isLight = false }) {
                         </div>
                       </div>
                       <Link
-                        to={`/project-details${isLight ? "-white" : ""}/${
-                          item.slug
-                        }`}
+                        to={`/portfolio-details/${item.slug}`}
                         className="over_link"
                       />
                     </div>

@@ -8,6 +8,19 @@
       display: none;
     }
   }
+
+  .text-logo {
+    color: var(--color-primary-3rd);
+    display: inline-flex;
+    align-items: center;
+    min-height: 41px;
+    font-family: var(--font-primary);
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0;
+    text-decoration: none;
+  }
 }
 
 .header-one {

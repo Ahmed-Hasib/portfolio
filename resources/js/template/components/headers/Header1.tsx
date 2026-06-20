@@ -5,10 +5,7 @@ import { Link } from "react-router-dom";
 import { useModalUI } from "@/context/ModalUIContext";
 import { useEffect, useState } from "react";
 
-export default function Header1({
-  darkLogo = "/assets/images/logo/white-logo-reeni.png",
-  lightLogo = "/assets/images/logo/logo-white.png",
-}) {
+export default function Header1({ logoText = "Hasib" }) {
   const { openModal } = useModalUI();
   const [isSticky, setIsSticky] = useState(false);
 
@@ -42,23 +39,8 @@ export default function Header1({
           <div className="col-lg-12">
             <div className="header-content">
               <div className="logo">
-                <Link to={`/`}>
-                  <img
-                    loading="lazy"
-                    className="logo-dark"
-                    alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                    src={darkLogo}
-                    width={121}
-                    height={41}
-                  />
-                  <img
-                    loading="lazy"
-                    className="logo-white"
-                    alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                    src={lightLogo}
-                    width={121}
-                    height={40}
-                  />
+                <Link to={`/`} className="text-logo" aria-label={`${logoText} home`}>
+                  {logoText}
                 </Link>
               </div>
               <nav className="tmp-mainmenu-nav d-none d-xl-block">

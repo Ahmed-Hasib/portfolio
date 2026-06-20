@@ -24,7 +24,20 @@ export default function usePortfolioContent() {
             setError(null);
 
             try {
-                const nextContent = await getPortfolioContent();
+                const nextContent = await getPortfolioContent(
+                    (partialContent) => {
+                        if (cancelled) {
+                            return;
+                        }
+
+                        startTransition(() => {
+                            setContent((currentContent) => ({
+                                ...currentContent,
+                                ...partialContent,
+                            }));
+                        });
+                    },
+                );
 
                 if (cancelled) {
                     return;
